@@ -5,15 +5,36 @@ from discord.ext import commands
 client = commands.Bot(command_prefix="kuttapa ")
 
 
+
 @client.event
 async def on_ready():
     print("bot online")
-# @client.event
-# async def on_connect(ctx,member):
-#     await ctx.send(f'Dhey {member} ezhunelli ')
-# @client.event
-# async def on_disconnect(ctx,member):
-#     await ctx.send(f'Ayoo {member} scoot aayi ')
+    await client.get_channel(746045604597334126).send("njan ethi")
+
+@client.event
+async def on_member_join(member):
+ await client.get_channel(746045604597334126).send(f'{member} ethi')
+
+@client.command()
+async def play(ctx,url):
+    channel = ctx.author.voice.channel
+    await channel.connect()
+    guild = ctx.message.guild
+    voice_client = client.voice_clients(guild)
+    player = await voice_client.create_ytdl_player(url)
+    player.start()
+
+
+@client.command()
+async def join(ctx):
+    channel = ctx.author.voice.channel
+    await channel.connect()
+@client.command()
+async def leave(ctx):
+    guild = ctx.message.guild
+    voice_client = client.voice_clients(guild)
+    await voice_client.disconnect()
+
 @client.command()
 async def jokes(ctx):
 
@@ -48,4 +69,4 @@ async def jokes(ctx):
 async def ping(ctx):
     await ctx.send(f'{round(client.latency * 1000)}ms')
 
-client.run('NzQ2NDAwNjM1OTA5NDM5NTgw.Xz_xww.rCAA4dkD_rRPDn6TDEkdozC1xcs')
+client.run('tokrm:NzQ2NDAwNjM1OTA5NDM5NTgw.Xz_xww.KwuuquTCL2AQ1rcBtkY5Yns5aos')
